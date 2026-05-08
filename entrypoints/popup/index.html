@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=360">
+  <title>GeminisWatchinU</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="popup-container">
+    <div class="popup-header">
+      <div class="popup-logo">
+        <span class="eye-icon">👁️</span>
+        <h1>GeminisWatchinU</h1>
+      </div>
+      <p class="popup-subtitle">On te surveille.</p>
+    </div>
+
+    <div class="popup-divider"></div>
+
+    <div class="toggle-section">
+      <div class="toggle-label">
+        <span class="toggle-icon">🔒</span>
+        <div>
+          <span class="toggle-title">Mode Redacted</span>
+          <span class="toggle-desc">Masquer l'historique</span>
+        </div>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="redacted-toggle" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <div class="status-section">
+      <button id="btn-disable-15m" class="btn-secondary">Désactiver 15 min</button>
+      <button id="btn-disable-all" class="btn-danger">Désactiver</button>
+      <button id="btn-enable" class="btn-success" style="display: none;">Réactiver GeminisWatchinU</button>
+    </div>
+
+    <div class="popup-footer">
+      <span class="footer-text">v1.0.0 — <span class="footer-accent">I see everything.</span></span>
+    </div>
+  </div>
+
+  <script src="./main.ts" type="module"></script>
+</body>
+</html>

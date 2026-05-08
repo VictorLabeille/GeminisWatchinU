@@ -1,0 +1,478 @@
+/* ── GeminisWatchinU — All Injected Styles ──────────────────── */
+/* Single CSS file injected via content script into gemini.google.com */
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Shake animation (anti-short-prompt) */
+@keyframes gwu-shake {
+  0%, 100% { transform: translateX(0); }
+  10% { transform: translateX(-5px); }
+  30% { transform: translateX(5px); }
+  50% { transform: translateX(-3px); }
+  70% { transform: translateX(3px); }
+  90% { transform: translateX(-1px); }
+}
+
+/* Melt animation (effacer les preuves) */
+@keyframes gwu-melt {
+  0% { transform: translateY(0) scaleX(1); opacity: 1; filter: blur(0); }
+  40% { transform: translateY(20px) scaleX(0.95); opacity: 0.8; filter: blur(1px); }
+  100% { transform: translateY(80px) scaleX(0.7); opacity: 0; filter: blur(6px); }
+}
+
+/* Slide in (achievement) */
+@keyframes gwu-slideIn {
+  from { right: -400px; opacity: 0; }
+  to { right: 20px; opacity: 1; }
+}
+
+/* Slide out (achievement) */
+@keyframes gwu-slideOut {
+  from { right: 20px; opacity: 1; }
+  to { right: -400px; opacity: 0; }
+}
+
+/* Bounce (achievement icon) */
+@keyframes gwu-bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+/* Fade pulse (passive-aggressive loader) */
+@keyframes gwu-fadePulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Bar slide up (histogram) */
+@keyframes gwu-barSlideUp {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+/* Level up (prompt-o-meter) */
+@keyframes gwu-levelUp {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DASHBOARD
+   ═══════════════════════════════════════════════════════════════ */
+
+.gwu-dashboard {
+  max-width: 500px;
+  margin: 24px auto;
+  padding: 24px;
+  background: linear-gradient(145deg, rgba(15, 15, 25, 0.95), rgba(25, 20, 40, 0.9));
+  border: 1px solid rgba(124, 58, 237, 0.15);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #e0e0e0;
+}
+
+.gwu-dashboard.gwu-melting {
+  animation: gwu-melt 1.2s ease-in forwards;
+}
+
+.gwu-dashboard-header {
+  margin-bottom: 20px;
+}
+
+.gwu-dashboard-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  background: linear-gradient(135deg, #c084fc, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gwu-dashboard-subtitle {
+  font-size: 12px;
+  color: #888;
+  margin: 0;
+}
+
+/* Histogram */
+.gwu-histogram {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 80px;
+  padding: 0 8px;
+  margin-bottom: 20px;
+  gap: 8px;
+}
+
+.gwu-bar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+  justify-content: flex-end;
+  animation: gwu-barSlideUp 0.4s ease-out both;
+}
+
+.gwu-bar-value {
+  font-size: 11px;
+  color: #aaa;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.gwu-bar {
+  width: 100%;
+  max-width: 36px;
+  background: linear-gradient(180deg, #7c3aed, #4f46e5);
+  border-radius: 6px 6px 2px 2px;
+  min-height: 4px;
+  transform-origin: bottom;
+  transition: height 0.3s ease;
+  box-shadow: 0 0 8px rgba(124, 58, 237, 0.3);
+}
+
+.gwu-bar-label {
+  font-size: 10px;
+  color: #666;
+  margin-top: 6px;
+  text-transform: capitalize;
+}
+
+/* Bullshit section */
+.gwu-bullshit-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.gwu-bullshit-label {
+  font-size: 13px;
+  color: #999;
+}
+
+.gwu-bullshit-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #22c55e;
+}
+
+.gwu-bullshit-anomaly {
+  font-size: 20px;
+  font-weight: 800;
+  color: #22c55e;
+  text-shadow: 0 0 12px rgba(34, 197, 94, 0.5);
+  animation: gwu-fadePulse 1s ease-in-out infinite;
+}
+
+/* Clear button */
+.gwu-clear-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #991b1b, #dc2626);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+.gwu-clear-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4);
+  background: linear-gradient(135deg, #b91c1c, #ef4444);
+}
+
+.gwu-clear-btn:active {
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EYES WIDGET
+   ═══════════════════════════════════════════════════════════════ */
+
+.gwu-eyes-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+.gwu-eyes {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.gwu-eye {
+  width: 46px;
+  height: 72px;
+}
+
+.gwu-eye-white {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse, #fff 60%, #e8e8e8 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.gwu-eye-veins {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, transparent 50%, rgba(200, 50, 50, 0.15) 60%, transparent 70%),
+    radial-gradient(ellipse at 80% 70%, transparent 50%, rgba(200, 50, 50, 0.12) 60%, transparent 70%),
+    radial-gradient(ellipse at 30% 80%, transparent 50%, rgba(200, 50, 50, 0.1) 60%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.gwu-pupil, .gwu-pupil-critical {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+  transition: transform 0.05s linear;
+  z-index: 2;
+}
+
+.gwu-pupil {
+  background: radial-gradient(circle, #1a1a2e 45%, #2d1b69 80%, #4f46e5 100%);
+}
+
+.gwu-pupil-critical {
+  background: #000;
+}
+
+.gwu-pupil-inner {
+  width: 14px;
+  height: 14px;
+  background: #000;
+  border-radius: 50%;
+  clip-path: circle(50%);
+  transition: clip-path 0.3s ease;
+  position: relative;
+}
+
+.gwu-pupil-inner::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PROMPT-O-METER
+   ═══════════════════════════════════════════════════════════════ */
+
+.gwu-meter {
+  max-width: 500px;
+  margin: 16px auto;
+  padding: 20px;
+  background: linear-gradient(145deg, rgba(15, 15, 25, 0.9), rgba(25, 20, 40, 0.85));
+  border: 1px solid rgba(124, 58, 237, 0.1);
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: #e0e0e0;
+}
+
+.gwu-meter-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.gwu-meter-icon {
+  font-size: 20px;
+}
+
+.gwu-meter-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.gwu-meter-level {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.gwu-meter-count {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.gwu-meter-bar-bg {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.gwu-meter-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease, background 0.3s ease;
+  box-shadow: 0 0 8px currentColor;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ANTI-SHORT-PROMPT
+   ═══════════════════════════════════════════════════════════════ */
+
+.gwu-shake {
+  animation: gwu-shake 0.4s ease !important;
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.3) !important;
+}
+
+.gwu-short-prompt-warning {
+  padding: 8px 16px;
+  margin-top: 8px;
+  color: #ef4444;
+  font-size: 13px;
+  font-weight: 600;
+  font-style: italic;
+  text-align: center;
+  transition: opacity 0.3s ease;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PASSIVE-AGGRESSIVE LOADER
+   ═══════════════════════════════════════════════════════════════ */
+
+.gwu-passive-loader {
+  text-align: center;
+  padding: 12px;
+  transition: opacity 0.3s ease;
+}
+
+.gwu-loader-text {
+  font-size: 12px;
+  color: #888;
+  font-style: italic;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  letter-spacing: 0.5px;
+  animation: gwu-fadePulse 2s ease-in-out infinite;
+  transition: opacity 0.3s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ECOCIDE ACHIEVEMENT
+   ═══════════════════════════════════════════════════════════════ */
+
+.gwu-achievement {
+  position: fixed;
+  bottom: 20px;
+  right: -400px;
+  width: 360px;
+  z-index: 99999;
+  animation: gwu-slideIn 500ms ease-out forwards,
+             gwu-slideOut 500ms ease-in 5.5s forwards;
+  pointer-events: none;
+}
+
+.gwu-achievement-inner {
+  padding: 18px 22px;
+  background: linear-gradient(145deg, #0f0f1a 0%, #1a1028 100%);
+  border: 1px solid rgba(76, 175, 80, 0.25);
+  border-left: 4px solid #4caf50;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 24px rgba(76, 175, 80, 0.1);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.gwu-achievement-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.gwu-achievement-icon {
+  font-size: 22px;
+  animation: gwu-bounce 600ms ease-out;
+}
+
+.gwu-achievement-title {
+  font-size: 13px;
+  color: #aaa;
+  font-weight: 500;
+}
+
+.gwu-achievement-subtitle {
+  font-size: 18px;
+  font-weight: 800;
+  color: #4caf50;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+  text-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+}
+
+.gwu-achievement-text {
+  font-size: 13px;
+  color: #ccc;
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MATRIX GLITCH (canvas is dynamically created)
+   ═══════════════════════════════════════════════════════════════ */
+
+.gwu-matrix-canvas {
+  image-rendering: pixelated;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GEMINI PAGE OVERRIDES
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Hide suggestion chips ("Créer une image", "Créer de la musique", etc.) */
+suggestion-chip,
+[class*="chip-cloud"],
+[class*="suggestion-chip"],
+[class*="suggestion_chip"],
+[class*="zero-state"] [class*="chips"],
+[class*="zero-state"] [class*="chip"],
+[class*="suggestions-container"],
+[class*="suggestion-container"] {
+  display: none !important;
+}
+

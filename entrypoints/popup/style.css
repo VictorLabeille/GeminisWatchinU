@@ -1,0 +1,245 @@
+/* ── Popup Styles — GeminisWatchinU ────────────────────────── */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 320px;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #0a0a0f;
+  color: #e0e0e0;
+  overflow: hidden;
+}
+
+.popup-container {
+  padding: 20px;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.popup-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.popup-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.eye-icon {
+  font-size: 24px;
+  animation: gwu-pulse 2s ease-in-out infinite;
+}
+
+@keyframes gwu-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+}
+
+.popup-logo h1 {
+  font-size: 18px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.popup-subtitle {
+  font-size: 11px;
+  color: #666;
+  font-style: italic;
+  margin-top: 4px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ── Divider ─────────────────────────────────────────────── */
+.popup-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #333, transparent);
+  margin: 12px 0;
+}
+
+/* ── Toggle Section ──────────────────────────────────────── */
+.toggle-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  transition: border-color 0.2s ease;
+}
+
+.toggle-section:hover {
+  border-color: rgba(124, 58, 237, 0.3);
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toggle-icon {
+  font-size: 18px;
+}
+
+.toggle-title {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f0f0f0;
+}
+
+.toggle-desc {
+  display: block;
+  font-size: 11px;
+  color: #888;
+  margin-top: 2px;
+}
+
+/* ── Toggle Switch ───────────────────────────────────────── */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: #333;
+  border-radius: 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background: #888;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  box-shadow: 0 0 12px rgba(124, 58, 237, 0.4);
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+  background: #fff;
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+.popup-footer {
+  text-align: center;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.footer-text {
+  font-size: 10px;
+  color: #555;
+}
+
+.footer-accent {
+  color: #7c3aed;
+  font-style: italic;
+}
+
+/* ── Status Section & Buttons ────────────────────────────────────────────── */
+
+.status-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.status-section button {
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Secondary Button (15 min) */
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.03);
+  color: #a3a3a3;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Danger Button (Désactiver) */
+.btn-danger {
+  background: rgba(239, 68, 68, 0.05);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.15);
+}
+
+.btn-danger:hover {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(185, 28, 28, 0.2));
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.4);
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.2), inset 0 0 8px rgba(239, 68, 68, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Success Button (Réactiver) */
+.btn-success {
+  background: rgba(16, 185, 129, 0.08);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+}
+
+.btn-success:hover {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.3));
+  color: #6ee7b7;
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.25), inset 0 0 10px rgba(16, 185, 129, 0.15);
+  transform: translateY(-1px);
+}
+
+.status-section button:active {
+  transform: translateY(1px);
+}

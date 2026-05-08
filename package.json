@@ -1,0 +1,18 @@
+{
+  "name": "geminis-watchin-u",
+  "version": "1.0.0",
+  "description": "Extension parodique et utilitaire pour Gemini",
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "build": "wxt build",
+    "zip": "wxt zip"
+  },
+  "dependencies": {
+    "wxt": "^0.20.25"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.315",
+    "typescript": "^5.8.3"
+  }
+}
