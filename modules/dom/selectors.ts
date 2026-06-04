@@ -48,6 +48,30 @@ export function isConversationPage(): boolean {
   return /^\/app\/[a-zA-Z0-9]+/.test(window.location.pathname);
 }
 
+/**
+ * True when a Gemini popup/menu is currently open (Angular CDK overlay:
+ * the "+" tools menu, model selector, dialogs, etc.).
+ *
+ * Injected widgets live on a separate body-level overlay layer, so no
+ * z-index trick can reliably push them *behind* a menu that Gemini renders
+ * inside its own app container. Instead, widgets query this and hide
+ * themselves while a menu is open, then reappear when it closes.
+ */
+export function isGeminiOverlayOpen(): boolean {
+  // A backdrop only exists while an overlay/menu is open (mat-menu uses a
+  // transparent backdrop), so it's the most reliable "is open" signal.
+  if (document.querySelector('.cdk-overlay-backdrop')) return true;
+
+  // Fallback: a visible CDK pane that actually has content.
+  const panes = document.querySelectorAll('.cdk-overlay-pane');
+  for (const pane of panes) {
+    if (pane instanceof HTMLElement && pane.offsetParent !== null && pane.childElementCount > 0) {
+      return true;
+    }
+  }
+  return false;
+}
+
 // ─── Prefixed class names for our extension (avoid collisions) ──
 export const PREFIX = 'gwu';
 export function gwuClass(name: string): string {

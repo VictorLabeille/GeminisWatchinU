@@ -11,6 +11,15 @@ L'utilisateur peut cliquer sur l'icône de l'extension dans la barre de son navi
 
 ---
 
+## 2.bis. Thème adaptatif (sombre / clair)
+Les widgets injectés (tableau de bord, Prompt-O-Meter, yeux, notifications) s'harmonisent automatiquement avec l'apparence de Gemini.
+*   **Suivi automatique du thème Gemini :** Les couleurs (fonds, textes, bordures) basculent en sombre ou en clair selon le thème courant de Gemini. Aucun réglage : le changement est détecté et appliqué **en direct** dès que l'utilisateur change le thème dans les paramètres de Gemini.
+*   **Palette basée sur Gemini :** Les surfaces reprennent les tons neutres de Gemini (sombre ou clair), et la couleur d'accent (titres, barres, dégradés) utilise le **dégradé Gemini** (bleu → violet → rose).
+*   **Couleurs fixes (intentionnelles) :** Certaines couleurs ne changent jamais car elles font partie de l'identité parodique : les blocs noirs du Mode Redacted (encre), le vert "Matrix" du glitch, le blanc des yeux et le rouge sang de la fatigue oculaire.
+*   **Popup :** Le popup de l'extension étant une page séparée, il suit le thème **du système d'exploitation** (clair/sombre) plutôt que celui de Gemini.
+
+---
+
 ## 3. Confidentialité : Le Mode "Redacted" (Barre latérale)
 Cette fonctionnalité vise à cacher les sujets de conversation à d'éventuels regards indiscrets (collègues, entourage), tout en gardant une esthétique "document classifié".
 
@@ -57,3 +66,9 @@ L'extension modifie le comportement de base de Gemini pour ajouter des frictions
 *   **Le Filtre "Anti-Short Prompt" :** Si l'utilisateur tente d'envoyer un message trop court (ex: moins de 15 caractères), l'envoi est bloqué au premier essai. La barre de saisie tremble en rouge et affiche le message : *"Allez mon grand tu peux brûler plus de tokens que ça"*. L'utilisateur doit valider une seconde fois pour forcer l'envoi.
 *   **Le Loader Passif-Agressif :** Pendant que Gemini génère sa réponse, de petits textes clignotants apparaissent sous l'animation de chargement de Google. (ex: *"Partage actif avec la NSA..."*, *"Jugement de ton orthographe en cours..."*).
 *   **L'Achievement "Écocide" :** Au moment précis où l'utilisateur envoie son 40ème message de la journée, une notification (façon "Succès Steam") apparaît en bas de l'écran avec un message de culpabilisation écologique aléatoire : *"Une nouvelle forêt de brûlée"* ou *"Nouveau village rasé pour construction d'un data center"*.
+
+---
+
+## 7. Comportements explicitement écartés
+*   **Chips de suggestion (« bubbles ») :** L'extension **ne masque pas** les chips de suggestion natifs de Gemini sur la page d'accueil (« Créer une image », « Créer de la musique », « Rédiger », etc.). Ce masquage a existé puis a été retiré — les chips doivent rester visibles. Ne pas réintroduire de feature qui les cache.
+*   **Non-recouvrement de l'UI native :** Les widgets injectés sur la page d'accueil ne doivent **jamais** passer devant les menus/popups natifs de Gemini (menu « + » de l'input, sélecteur de modèle, dialogues, etc.). Concrètement, **le tableau de stats se masque automatiquement tant qu'un menu Gemini est ouvert**, puis réapparaît dès sa fermeture — l'UI de Gemini reste toujours visible et cliquable au premier plan.

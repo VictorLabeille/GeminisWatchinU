@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=360">
   <title>GeminisWatchinU</title>
+  <!-- Set theme before first paint to avoid a flash of the dark default. -->
+  <script>
+    document.documentElement.setAttribute(
+      'data-gwu-theme',
+      window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    );
+  </script>
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>

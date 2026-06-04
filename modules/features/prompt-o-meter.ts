@@ -19,15 +19,18 @@ interface Level {
   color: string;
 }
 
+// Colors are mid-tones chosen to stay legible on BOTH the light and dark
+// widget surface (the meter panel follows Gemini's theme). The hue progression
+// (green → cyan → amber → orange → red → magenta → violet → red) is preserved.
 const LEVELS: Level[] = [
-  { min: 0,  max: 0,  label: 'Bébé Cadum',            emoji: '👶', color: '#86efac' },
-  { min: 1,  max: 3,  label: 'Penseur indépendant',    emoji: '🧠', color: '#67e8f9' },
-  { min: 4,  max: 5,  label: 'Penseur pas trop libre',  emoji: '🤔', color: '#fbbf24' },
-  { min: 6,  max: 10, label: 'Prompt hein-génieur',     emoji: '⚙️', color: '#fb923c' },
-  { min: 11, max: 15, label: 'Good Boy',                emoji: '🐕', color: '#f87171' },
-  { min: 16, max: 25, label: 'ClankerLover',            emoji: '🤖', color: '#e879f9' },
-  { min: 26, max: 35, label: 'Gooning Bot',             emoji: '💀', color: '#c084fc' },
-  { min: 36, max: 49, label: 'Soldat du Tsahal',        emoji: '🪖', color: '#ef4444' },
+  { min: 0,  max: 0,  label: 'Bébé Cadum',            emoji: '👶', color: '#16a34a' },
+  { min: 1,  max: 3,  label: 'Penseur indépendant',    emoji: '🧠', color: '#0891b2' },
+  { min: 4,  max: 5,  label: 'Penseur pas trop libre',  emoji: '🤔', color: '#d97706' },
+  { min: 6,  max: 10, label: 'Prompt hein-génieur',     emoji: '⚙️', color: '#ea580c' },
+  { min: 11, max: 15, label: 'Good Boy',                emoji: '🐕', color: '#dc2626' },
+  { min: 16, max: 25, label: 'ClankerLover',            emoji: '🤖', color: '#db2777' },
+  { min: 26, max: 35, label: 'Gooning Bot',             emoji: '💀', color: '#9333ea' },
+  { min: 36, max: 49, label: 'Soldat du Tsahal',        emoji: '🪖', color: '#b91c1c' },
 ];
 
 function getLevel(count: number): { label: string; emoji: string; color: string } {

@@ -29,7 +29,10 @@ function createOverlay(): HTMLElement {
       width: 100%;
       height: 100%;
       pointer-events: none; /* Let clicks pass through to Gemini */
-      z-index: 9999;
+      /* Sits above Gemini's base content but BELOW its popup menus / CDK
+         overlays (~1000), so injected widgets (dashboard, eyes, meter) never
+         cover Gemini's own interactive UI. */
+      z-index: 100;
       overflow: hidden;
     `;
     document.body.appendChild(overlay);

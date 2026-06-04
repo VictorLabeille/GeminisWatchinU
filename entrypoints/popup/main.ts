@@ -2,6 +2,16 @@
  * Popup main.ts — Toggle Redacted mode on/off
  */
 
+// ── Theme ───────────────────────────────────────────────────
+// The popup can't read Gemini's theme (separate context), so it follows the
+// OS `prefers-color-scheme`, applying the same `--gwu-*` tokens as the widgets.
+const darkMql = window.matchMedia('(prefers-color-scheme: dark)');
+function applyPopupTheme() {
+  document.documentElement.setAttribute('data-gwu-theme', darkMql.matches ? 'dark' : 'light');
+}
+applyPopupTheme();
+darkMql.addEventListener('change', applyPopupTheme);
+
 const toggle = document.getElementById('redacted-toggle') as HTMLInputElement;
 
 // Load current state

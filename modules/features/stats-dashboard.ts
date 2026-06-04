@@ -4,8 +4,9 @@
  * Displayed on home page only. Disappears in conversations.
  */
 
-import { gwuClass, isHomePage, findInputAreaAnchor, findMainContentArea } from '../dom/selectors';
+import { gwuClass, isHomePage, findInputAreaAnchor, findMainContentArea, isGeminiOverlayOpen } from '../dom/selectors';
 import { getLastNDays, getCurrentWeekStats, getWeeklyDelta, getBullshitStat, fakeClearStats, getTodayCount } from '../storage/stats-store';
+import { gwuToken } from '../theme/theme';
 
 const DASHBOARD_ID = gwuClass('dashboard');
 let dashboardElement: HTMLElement | null = null;
@@ -29,7 +30,7 @@ async function buildDashboardHTML(): Promise<string> {
   }).join('');
 
   const deltaSign = weeklyDelta.deltaPercent >= 0 ? '+' : '';
-  const deltaColor = weeklyDelta.deltaPercent >= 0 ? '#22c55e' : '#ef4444';
+  const deltaColor = weeklyDelta.deltaPercent >= 0 ? gwuToken('--gwu-success') : gwuToken('--gwu-danger');
 
   const bullshitDisplay = bullshit.isAnomaly
     ? `<span class="${gwuClass('bullshit-anomaly')}">+3367%</span>`
@@ -82,6 +83,15 @@ function injectDashboard(html: string) {
     element: container,
     updatePosition: () => {
       if (!dashboardElement) return;
+
+      // Yield to Gemini's own popups/menus: a separate body-level overlay can't
+      // reliably sit *behind* a menu Gemini renders inside its app container,
+      // so we hide the dashboard while any Gemini menu is open and restore it
+      // when it closes. (Runs every frame via the overlay's rAF loop.)
+      // Use `display`, not `visibility`: `visibility` is animatable, so the
+      // clear button's `transition: all` would lag ~0.2s behind on hide.
+      dashboardElement.style.display = isGeminiOverlayOpen() ? 'none' : '';
+
       const anchor = findInputAreaAnchor();
       if (anchor) {
         const rect = anchor.getBoundingClientRect();
@@ -172,7 +182,7 @@ function animateTextDownTo(el: HTMLElement, start: number, end: number, suffix: 
     }
     
     const sign = current >= 0 ? '+' : '';
-    const color = current >= 0 ? '#22c55e' : '#ef4444';
+    const color = current >= 0 ? gwuToken('--gwu-success') : gwuToken('--gwu-danger');
     
     let text = `${sign}${current}${suffix}`;
     if (includeParens) {

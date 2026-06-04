@@ -9,6 +9,7 @@ import '@/assets/styles.css';
 import { initCentralObserver } from '@/modules/dom/observer';
 import { isHomePage } from '@/modules/dom/selectors';
 import { incrementTodayCount } from '@/modules/storage/stats-store';
+import { initTheme } from '@/modules/theme/theme';
 
 // Features
 import { initRedacted } from '@/modules/features/redacted';
@@ -20,7 +21,6 @@ import { initCynicalPlaceholders } from '@/modules/features/cynical-placeholders
 import { initAntiShortPrompt } from '@/modules/features/anti-short-prompt';
 import { attachPassiveLoader, initPassiveLoader } from '@/modules/features/passive-loader';
 import { checkEcocideAchievement, initEcocide } from '@/modules/features/ecocide-achievement';
-import { initHideChips } from '@/modules/features/hide-chips';
 
 export default defineContentScript({
   matches: ['https://gemini.google.com/*'],
@@ -42,6 +42,10 @@ export default defineContentScript({
     // ── Initialize all features ───────────────────────────
     const cleanups: (() => void)[] = [];
 
+    // Adaptive theming — mount first so `data-gwu-theme` is set on <html>
+    // before any widget renders (follows Gemini's light/dark theme live).
+    cleanups.push(initTheme());
+
     // Redacted mode (sidebar masking)
     cleanups.push(await initRedacted());
 
@@ -59,9 +63,6 @@ export default defineContentScript({
 
     // Ecocide achievement
     cleanups.push(initEcocide());
-
-    // Hide suggestion chips ("Créer une image", etc.)
-    cleanups.push(initHideChips());
 
     // ── Central observer for navigation + queries ─────────
     const cleanupObserver = initCentralObserver({

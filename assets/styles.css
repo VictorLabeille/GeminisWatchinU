@@ -2,6 +2,46 @@
 /* Single CSS file injected via content script into gemini.google.com */
 
 /* ═══════════════════════════════════════════════════════════════
+   THEME TOKENS
+   Two palettes (dark default + light override) derived from Gemini's
+   own colors. `data-gwu-theme` is set on <html> by modules/theme/theme.ts,
+   which follows Gemini's current theme live. Accent = Gemini gradient.
+   Semantic colors that are part of the parody (redaction ink, Matrix
+   green, eye whites/blood) stay fixed and are NOT tokenized here.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --gwu-surface-grad: linear-gradient(145deg, rgba(20, 21, 23, 0.96), rgba(30, 31, 33, 0.92));
+  --gwu-surface-subtle: rgba(255, 255, 255, 0.03);
+  --gwu-border: rgba(255, 255, 255, 0.08);
+  --gwu-text: #e3e3e3;
+  --gwu-text-dim: #9aa0a6;
+  --gwu-text-faint: #5f6368;
+  --gwu-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --gwu-accent: #9b72cb;
+  --gwu-accent-grad: linear-gradient(135deg, #4285f4, #9b72cb, #d96570);
+  --gwu-bar-grad: linear-gradient(180deg, #4285f4, #9b72cb);
+  --gwu-bar-glow: rgba(155, 114, 203, 0.35);
+  --gwu-meter-track: rgba(255, 255, 255, 0.08);
+  --gwu-success: #22c55e;
+  --gwu-danger: #ef4444;
+}
+
+:root[data-gwu-theme="light"] {
+  --gwu-surface-grad: linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(240, 244, 249, 0.95));
+  --gwu-surface-subtle: rgba(0, 0, 0, 0.04);
+  --gwu-border: rgba(0, 0, 0, 0.10);
+  --gwu-text: #1f1f1f;
+  --gwu-text-dim: #5f6368;
+  --gwu-text-faint: #80868b;
+  --gwu-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --gwu-bar-glow: rgba(66, 133, 244, 0.25);
+  --gwu-meter-track: rgba(0, 0, 0, 0.08);
+  --gwu-success: #16a34a;
+  --gwu-danger: #dc2626;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    ANIMATIONS
    ═══════════════════════════════════════════════════════════════ */
 
@@ -67,13 +107,13 @@
   max-width: 500px;
   margin: 24px auto;
   padding: 24px;
-  background: linear-gradient(145deg, rgba(15, 15, 25, 0.95), rgba(25, 20, 40, 0.9));
-  border: 1px solid rgba(124, 58, 237, 0.15);
+  background: var(--gwu-surface-grad);
+  border: 1px solid var(--gwu-border);
   border-radius: 16px;
   backdrop-filter: blur(12px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: var(--gwu-shadow);
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  color: #e0e0e0;
+  color: var(--gwu-text);
 }
 
 .gwu-dashboard.gwu-melting {
@@ -88,7 +128,7 @@
   font-size: 18px;
   font-weight: 700;
   margin: 0 0 6px 0;
-  background: linear-gradient(135deg, #c084fc, #ec4899);
+  background: var(--gwu-accent-grad);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -96,7 +136,7 @@
 
 .gwu-dashboard-subtitle {
   font-size: 12px;
-  color: #888;
+  color: var(--gwu-text-dim);
   margin: 0;
 }
 
@@ -123,7 +163,7 @@
 
 .gwu-bar-value {
   font-size: 11px;
-  color: #aaa;
+  color: var(--gwu-text-dim);
   margin-bottom: 4px;
   font-weight: 600;
 }
@@ -131,17 +171,17 @@
 .gwu-bar {
   width: 100%;
   max-width: 36px;
-  background: linear-gradient(180deg, #7c3aed, #4f46e5);
+  background: var(--gwu-bar-grad);
   border-radius: 6px 6px 2px 2px;
   min-height: 4px;
   transform-origin: bottom;
   transition: height 0.3s ease;
-  box-shadow: 0 0 8px rgba(124, 58, 237, 0.3);
+  box-shadow: 0 0 8px var(--gwu-bar-glow);
 }
 
 .gwu-bar-label {
   font-size: 10px;
-  color: #666;
+  color: var(--gwu-text-faint);
   margin-top: 6px;
   text-transform: capitalize;
 }
@@ -152,26 +192,26 @@
   align-items: center;
   gap: 8px;
   padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--gwu-surface-subtle);
   border-radius: 10px;
   margin-bottom: 16px;
 }
 
 .gwu-bullshit-label {
   font-size: 13px;
-  color: #999;
+  color: var(--gwu-text-dim);
 }
 
 .gwu-bullshit-value {
   font-size: 16px;
   font-weight: 700;
-  color: #22c55e;
+  color: var(--gwu-success);
 }
 
 .gwu-bullshit-anomaly {
   font-size: 20px;
   font-weight: 800;
-  color: #22c55e;
+  color: var(--gwu-success);
   text-shadow: 0 0 12px rgba(34, 197, 94, 0.5);
   animation: gwu-fadePulse 1s ease-in-out infinite;
 }
@@ -298,12 +338,12 @@
   max-width: 500px;
   margin: 16px auto;
   padding: 20px;
-  background: linear-gradient(145deg, rgba(15, 15, 25, 0.9), rgba(25, 20, 40, 0.85));
-  border: 1px solid rgba(124, 58, 237, 0.1);
+  background: var(--gwu-surface-grad);
+  border: 1px solid var(--gwu-border);
   border-radius: 14px;
   backdrop-filter: blur(8px);
   font-family: 'Segoe UI', system-ui, sans-serif;
-  color: #e0e0e0;
+  color: var(--gwu-text);
 }
 
 .gwu-meter-header {
@@ -320,7 +360,7 @@
 .gwu-meter-title {
   font-size: 14px;
   font-weight: 600;
-  color: #aaa;
+  color: var(--gwu-text-dim);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -334,13 +374,13 @@
 
 .gwu-meter-count {
   font-size: 12px;
-  color: #666;
+  color: var(--gwu-text-faint);
   margin-bottom: 12px;
 }
 
 .gwu-meter-bar-bg {
   height: 6px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--gwu-meter-track);
   border-radius: 3px;
   overflow: hidden;
 }
@@ -358,14 +398,14 @@
 
 .gwu-shake {
   animation: gwu-shake 0.4s ease !important;
-  border-color: #ef4444 !important;
+  border-color: var(--gwu-danger) !important;
   box-shadow: 0 0 12px rgba(239, 68, 68, 0.3) !important;
 }
 
 .gwu-short-prompt-warning {
   padding: 8px 16px;
   margin-top: 8px;
-  color: #ef4444;
+  color: var(--gwu-danger);
   font-size: 13px;
   font-weight: 600;
   font-style: italic;
@@ -386,7 +426,7 @@
 
 .gwu-loader-text {
   font-size: 12px;
-  color: #888;
+  color: var(--gwu-text-dim);
   font-style: italic;
   font-family: 'Segoe UI', system-ui, sans-serif;
   letter-spacing: 0.5px;
@@ -411,11 +451,11 @@
 
 .gwu-achievement-inner {
   padding: 18px 22px;
-  background: linear-gradient(145deg, #0f0f1a 0%, #1a1028 100%);
+  background: var(--gwu-surface-grad);
   border: 1px solid rgba(76, 175, 80, 0.25);
   border-left: 4px solid #4caf50;
   border-radius: 10px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 24px rgba(76, 175, 80, 0.1);
+  box-shadow: var(--gwu-shadow), 0 0 24px rgba(76, 175, 80, 0.1);
   font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
@@ -433,7 +473,7 @@
 
 .gwu-achievement-title {
   font-size: 13px;
-  color: #aaa;
+  color: var(--gwu-text-dim);
   font-weight: 500;
 }
 
@@ -448,7 +488,7 @@
 
 .gwu-achievement-text {
   font-size: 13px;
-  color: #ccc;
+  color: var(--gwu-text);
   line-height: 1.4;
 }
 
@@ -464,15 +504,4 @@
    GEMINI PAGE OVERRIDES
    ═══════════════════════════════════════════════════════════════ */
 
-/* Hide suggestion chips ("Créer une image", "Créer de la musique", etc.) */
-suggestion-chip,
-[class*="chip-cloud"],
-[class*="suggestion-chip"],
-[class*="suggestion_chip"],
-[class*="zero-state"] [class*="chips"],
-[class*="zero-state"] [class*="chip"],
-[class*="suggestions-container"],
-[class*="suggestion-container"] {
-  display: none !important;
-}
 
