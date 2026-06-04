@@ -23,7 +23,9 @@ async function buildDashboardHTML(): Promise<string> {
     return `
       <div class="${gwuClass('bar-wrapper')}" style="animation-delay: ${i * 50}ms">
         <div class="${gwuClass('bar-value')}">${day.count}</div>
-        <div class="${gwuClass('bar')}" style="height: ${heightPercent}%"></div>
+        <div class="${gwuClass('bar-track')}">
+          <div class="${gwuClass('bar')}" style="height: ${heightPercent}%"></div>
+        </div>
         <div class="${gwuClass('bar-label')}">${dayLabel}</div>
       </div>
     `;
