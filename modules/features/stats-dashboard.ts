@@ -41,7 +41,7 @@ async function buildDashboardHTML(): Promise<string> {
   return `
     <div id="${DASHBOARD_ID}" class="${gwuClass('dashboard')}">
       <div class="${gwuClass('dashboard-header')}">
-        <h2 class="${gwuClass('dashboard-title')}">📊 Ton addiction en chiffres</h2>
+        <h2 class="${gwuClass('dashboard-title')}">📊 <span class="${gwuClass('title-grad')}">Ton addiction en chiffres</span></h2>
         <p class="${gwuClass('dashboard-subtitle')}">Semaine glissante — ${weeklyDelta.thisWeek} requêtes
           <span style="color: ${deltaColor}">(${deltaSign}${weeklyDelta.deltaPercent}% vs semaine précédente)</span>
         </p>

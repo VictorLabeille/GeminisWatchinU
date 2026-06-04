@@ -5,6 +5,12 @@
    from the OS `prefers-color-scheme`. Dark is the default; light overrides
    below. Accent = Gemini gradient. */
 :root {
+  /* Tell the browser which scheme our content uses, so the popup chrome it
+     paints around the content (background/overscroll, scrollbars) matches our
+     theme instead of defaulting to the browser's (dark) UI — that mismatch is
+     what showed up as a dark border on the right/bottom edges in light mode. */
+  color-scheme: dark;
+
   --gwu-bg: #0a0a0f;
   --gwu-surface-subtle: rgba(255, 255, 255, 0.03);
   --gwu-surface-hover: rgba(255, 255, 255, 0.08);
@@ -21,6 +27,8 @@
 }
 
 :root[data-gwu-theme="light"] {
+  color-scheme: light;
+
   --gwu-bg: #ffffff;
   --gwu-surface-subtle: rgba(0, 0, 0, 0.04);
   --gwu-surface-hover: rgba(0, 0, 0, 0.07);
@@ -38,6 +46,14 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* Paint the theme background on the root too: the popup viewport can be a
+   touch wider/taller than <body>, and any uncovered <html> area would
+   otherwise show a dark default and read as a dark border (visible in light
+   theme on the right/bottom edges). */
+html {
+  background: var(--gwu-bg);
 }
 
 body {

@@ -128,6 +128,12 @@
   font-size: 18px;
   font-weight: 700;
   margin: 0 0 6px 0;
+}
+
+/* Gradient is clipped to text only — keep it OFF the <h2> so the leading
+   emoji isn't clipped into a colored square. The emoji sits outside this
+   span and renders with its normal color glyph. */
+.gwu-title-grad {
   background: var(--gwu-accent-grad);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

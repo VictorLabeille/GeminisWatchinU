@@ -72,7 +72,17 @@ export function gwuToken(name: string): string {
  * Returns a cleanup function.
  */
 export function initTheme(): () => void {
-  const reapply = () => applyGwuTheme(detectGeminiTheme());
+  let last: GwuTheme | null = null;
+  const reapply = () => {
+    const theme = detectGeminiTheme();
+    applyGwuTheme(theme);
+    // Persist so the popup (a separate context that can't read Gemini's DOM)
+    // can follow Gemini's theme rather than the OS. Only write on change.
+    if (theme !== last) {
+      last = theme;
+      chrome.storage.local.set({ gwuGeminiTheme: theme }).catch(() => {});
+    }
+  };
   reapply();
 
   // React to Gemini toggling its theme classes on <body>.

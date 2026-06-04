@@ -16,7 +16,7 @@ Les widgets injectés (tableau de bord, Prompt-O-Meter, yeux, notifications) s'h
 *   **Suivi automatique du thème Gemini :** Les couleurs (fonds, textes, bordures) basculent en sombre ou en clair selon le thème courant de Gemini. Aucun réglage : le changement est détecté et appliqué **en direct** dès que l'utilisateur change le thème dans les paramètres de Gemini.
 *   **Palette basée sur Gemini :** Les surfaces reprennent les tons neutres de Gemini (sombre ou clair), et la couleur d'accent (titres, barres, dégradés) utilise le **dégradé Gemini** (bleu → violet → rose).
 *   **Couleurs fixes (intentionnelles) :** Certaines couleurs ne changent jamais car elles font partie de l'identité parodique : les blocs noirs du Mode Redacted (encre), le vert "Matrix" du glitch, le blanc des yeux et le rouge sang de la fatigue oculaire.
-*   **Popup :** Le popup de l'extension étant une page séparée, il suit le thème **du système d'exploitation** (clair/sombre) plutôt que celui de Gemini.
+*   **Popup :** Le popup de l'extension étant une page séparée (il ne peut pas lire le DOM de Gemini), il suit le **dernier thème détecté sur un onglet Gemini** (mémorisé), avec le thème du système d'exploitation en simple secours si aucun onglet Gemini n'a encore été ouvert.
 
 ---
 

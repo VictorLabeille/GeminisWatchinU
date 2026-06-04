@@ -3,14 +3,26 @@
  */
 
 // ── Theme ───────────────────────────────────────────────────
-// The popup can't read Gemini's theme (separate context), so it follows the
-// OS `prefers-color-scheme`, applying the same `--gwu-*` tokens as the widgets.
+// The popup can't read Gemini's DOM (separate context), so it follows the
+// theme last detected on a Gemini tab (persisted to storage by the content
+// script's theme module), falling back to the OS `prefers-color-scheme` when
+// no Gemini tab has run yet. Applies the same `--gwu-*` tokens as the widgets.
 const darkMql = window.matchMedia('(prefers-color-scheme: dark)');
-function applyPopupTheme() {
-  document.documentElement.setAttribute('data-gwu-theme', darkMql.matches ? 'dark' : 'light');
+function setPopupTheme(theme: 'dark' | 'light') {
+  document.documentElement.setAttribute('data-gwu-theme', theme);
 }
-applyPopupTheme();
-darkMql.addEventListener('change', applyPopupTheme);
+
+chrome.storage.local.get('gwuGeminiTheme').then((result) => {
+  const stored = result.gwuGeminiTheme as 'dark' | 'light' | undefined;
+  setPopupTheme(stored ?? (darkMql.matches ? 'dark' : 'light'));
+});
+
+// Live-follow Gemini's theme if it changes while the popup is open.
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === 'local' && changes.gwuGeminiTheme) {
+    setPopupTheme(changes.gwuGeminiTheme.newValue as 'dark' | 'light');
+  }
+});
 
 const toggle = document.getElementById('redacted-toggle') as HTMLInputElement;
 
